@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- ==================== SIMPLE TYPES ==================== -->
+    <xs:simpleType name="ProductIdType">
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="PriceType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="StockType">
+        <xs:restriction base="xs:nonNegativeInteger"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="NonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ImageUrlType">
+        <xs:restriction base="xs:anyURI"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="CategoryType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="laptop"/>
+            <xs:enumeration value="accessori"/>
+            <xs:enumeration value="monitor"/>
+            <xs:enumeration value="audio"/>
+            <xs:enumeration value="smartphone"/>
+            <xs:enumeration value="tablet"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- ==================== COMPLEX TYPES ==================== -->
+    <xs:complexType name="ProductType">
+        <xs:sequence>
+            <xs:element name="name"        type="NonEmptyString"/>
+            <xs:element name="category"    type="CategoryType"/>
+            <xs:element name="price"       type="PriceType"/>
+            <xs:element name="stock"       type="StockType"/>
+            <xs:element name="image"       type="ImageUrlType"/>
+            <xs:element name="description" type="NonEmptyString"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="ProductIdType" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ProductsType">
+        <xs:sequence>
+            <xs:element name="product" type="ProductType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ==================== ROOT ELEMENT ==================== -->
+    <xs:element name="products" type="ProductsType">
+        <xs:unique name="uniqueProductId">
+            <xs:selector xpath="product"/>
+            <xs:field xpath="@id"/>
+        </xs:unique>
+    </xs:element>
+
+</xs:schema>

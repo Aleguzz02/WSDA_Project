@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="products-data-schema.xsd">
+    <product id="1">
+        <name>Laptop Pro</name>
+        <category>laptop</category>
+        <price>899.99</price>
+        <stock>5</stock>
+        <image>https://placehold.co/400x300?text=Laptop+Pro</image>
+        <description>Portatile ad alte prestazioni con processore di ultima generazione e display da 15.6 pollici.</description>
+    </product>
+    <product id="2">
+        <name>Mouse Wireless</name>
+        <category>accessori</category>
+        <price>19.99</price>
+        <stock>12</stock>
+        <image>https://placehold.co/400x300?text=Mouse+Wireless</image>
+        <description>Mouse ergonomico senza fili con sensore ottico ad alta precisione.</description>
+    </product>
+    <product id="3">
+        <name>Tastiera Meccanica</name>
+        <category>accessori</category>
+        <price>59.99</price>
+        <stock>8</stock>
+        <image>https://placehold.co/400x300?text=Tastiera+Meccanica</image>
+        <description>Tastiera meccanica con retroilluminazione RGB e switch lineari reattivi.</description>
+    </product>
+    <product id="4">
+        <name>Monitor 27 Pollici</name>
+        <category>monitor</category>
+        <price>199.99</price>
+        <stock>4</stock>
+        <image>https://placehold.co/400x300?text=Monitor+27</image>
+        <description>Monitor IPS Full HD a 144Hz ideale per produttività e intrattenimento.</description>
+    </product>
+    <product id="5">
+        <name>Cuffie Bluetooth</name>
+        <category>audio</category>
+        <price>49.99</price>
+        <stock>15</stock>
+        <image>https://placehold.co/400x300?text=Cuffie+Bluetooth</image>
+        <description>Cuffie over-ear con cancellazione del rumore e fino a 30 ore di autonomia.</description>
+    </product>
+    <product id="6">
+        <name>Webcam HD</name>
+        <category>accessori</category>
+        <price>39.99</price>
+        <stock>7</stock>
+        <image>https://placehold.co/400x300?text=Webcam+HD</image>
+        <description>Webcam con risoluzione 1080p e microfono integrato per video chiamate nitide.</description>
+    </product>
+    <product id="7">
+        <name>Smartphone Lite</name>
+        <category>smartphone</category>
+        <price>299.99</price>
+        <stock>9</stock>
+        <image>https://placehold.co/400x300?text=Smartphone+Lite</image>
+        <description>Smartphone compatto con tripla fotocamera e batteria a lunga durata.</description>
+    </product>
+    <product id="8">
+        <name>Tablet 10 Pollici</name>
+        <category>tablet</category>
+        <price>249.99</price>
+        <stock>6</stock>
+        <image>https://placehold.co/400x300?text=Tablet+10</image>
+        <description>Tablet versatile per studio e streaming con schermo ad alta risoluzione.</description>
+    </product>
+</products>
