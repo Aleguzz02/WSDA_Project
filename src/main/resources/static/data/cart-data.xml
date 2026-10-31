@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cart xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="cart-schema.xsd">
+    <item productId="5">
+        <name>Cuffie Bluetooth</name>
+        <price>49.99</price>
+        <quantity>1</quantity>
+        <image>https://placehold.co/120x90?text=Cuffie</image>
+        <desc>Cuffie wireless con cancellazione attiva del rumore.</desc>
+    </item>
+    <item productId="2">
+        <name>Mouse Wireless</name>
+        <price>19.99</price>
+        <quantity>2</quantity>
+        <image>https://placehold.co/120x90?text=Mouse</image>
+        <desc>Mouse ergonomico per ufficio e studio.</desc>
+    </item>
+</cart>

@@ -2,12 +2,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // --- STATO DELL'APPLICAZIONE ---
     const cart = [];
 
+    let products = [];
+
     // --- ELEMENTI DEL DOM ---
     const productsContainer = document.getElementById("products");
     const searchForm = document.getElementById("search-form");
     const searchInput = document.getElementById("search-input");
     const categoryFilter = document.getElementById("category-filter");
     const btnResetFilters = document.getElementById("btn-reset-filters");
+    const btnLoadMore = document.getElementById("btn-load-more");
 
     // Elementi del carrello
     const cartContainer = document.getElementById("cart-items-container");
@@ -167,6 +170,37 @@ document.addEventListener("DOMContentLoaded", () => {
     // FUNZIONI CATALOGO E FILTRI
     // ==========================================================================
 
+    function loadProductsFromXML(xmlUrl, callback = null) {
+        fetch(xmlUrl)
+            .then(response => {
+                if (!response.ok) throw new Error("Errore di rete");
+                return response.text();
+            })
+            .then(xmlString => {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlString, "application/xml");
+                const productNodes = xmlDoc.querySelectorAll("product");
+
+                productNodes.forEach(item => {
+                    products.push({
+                        id: parseInt(item.getAttribute("id"), 10),
+                        name: item.querySelector("name").textContent,
+                        category: item.querySelector("category").textContent,
+                        price: parseFloat(item.querySelector("price").textContent),
+                        stock: parseInt(item.querySelector("stock").textContent, 10),
+                        image: item.querySelector("image").textContent,
+                        description: item.querySelector("description").textContent
+                    });
+                });
+
+                filterProducts();
+                if (callback) callback();
+            })
+            .catch(() => {
+                alert("Errore durante il caricamento del catalogo prodotti (" + xmlUrl + ").");
+            });
+    }
+
     function renderProducts(items) {
         productsContainer.innerHTML = "";
 
@@ -265,7 +299,16 @@ document.addEventListener("DOMContentLoaded", () => {
     btnCloseInfo.addEventListener("click", () => modalInfo.close());
     btnCloseCart.addEventListener("click", () => modalCart.close());
 
-    // Inizializzazione della vista
-    renderProducts(products);
+    if (btnLoadMore) {
+        btnLoadMore.addEventListener("click", () => {
+            loadProductsFromXML("data/products-data2.xml", () => {
+                btnLoadMore.disabled = true;
+                btnLoadMore.textContent = "Tutti i prodotti caricati";
+            });
+        });
+    }
+
+    // Caricamento iniziale
+    loadProductsFromXML("data/products-data1.xml");
     renderCart();
 });

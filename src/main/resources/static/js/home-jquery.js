@@ -1,10 +1,26 @@
 document.addEventListener("DOMContentLoaded", function () {
     // --- 1. STATO DELL'APPLICAZIONE (Carrello e Preferiti persistenti) ---
-    const savedCart = localStorage.getItem("cart");
-    const cart = savedCart ? JSON.parse(savedCart) : [];
+    let productList = [];
+    let cart = [];
+    let favorites = [];
 
-    const savedFavoritesData = localStorage.getItem("favorites");
-    const favorites = savedFavoritesData ? JSON.parse(savedFavoritesData) : [];
+    try {
+        const savedCart = localStorage.getItem("cart");
+        cart = savedCart ? JSON.parse(savedCart) : [];
+        if (!Array.isArray(cart)) cart = [];
+    } catch (e) {
+        console.warn("Cart non leggibile da localStorage:", e);
+        cart = [];
+    }
+
+    try {
+        const savedFavoritesData = localStorage.getItem("favorites");
+        favorites = savedFavoritesData ? JSON.parse(savedFavoritesData) : [];
+        if (!Array.isArray(favorites)) favorites = [];
+    } catch (e) {
+        console.warn("Favorites non leggibili da localStorage:", e);
+        favorites = [];
+    }
 
     let currentModalProductId = null;
 
@@ -14,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const cartContainer = document.getElementById("cart-items-container");
     const cartTotalAmount = document.getElementById("cart-total-amount");
     const btnCartCheckout = document.getElementById("btn-cart-checkout");
+    const $btnLoadMore = $("#btn-load-more");
 
     // Filtri e ricerca
     const $searchForm = $("#search-form");
@@ -55,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ==========================================================================
 
     function addToCart(productId) {
-        const product = products.find(function (p) {
+        const product = productList.find(function (p) {
             return p.id === productId;
         });
         if (!product) return;
@@ -121,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let total = 0;
 
         cart.forEach(function (item) {
-            const product = products.find(function (p) {
+            const product = productList.find(function (p) {
                 return p.id === item.productId;
             });
             if (!product) return;
@@ -194,6 +211,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // 6. CATALOGO, RICERCA, FILTRI E MODALE INFO
     // ==========================================================================
 
+    /**
+     * Carica e parsa un file XML di prodotti, accodando gli elementi a 'productList'
+     * @param {string} xmlUrl - Percorso del file XML
+     * @param {Function} callback - Funzione da eseguire a caricamento completato
+     */
+    function loadProductsFromXML(xmlUrl, callback = null) {
+        $.ajax({ type: "GET", url: xmlUrl, dataType: "xml" })
+            .done(function (xmlDoc) {
+                $(xmlDoc).find("product").each(function () {
+                    const $item = $(this);
+                    productList.push({
+                        id: parseInt($item.attr("id"), 10),
+                        name: $item.find("name").text(),
+                        category: $item.find("category").text(),
+                        price: parseFloat($item.find("price").text()),
+                        stock: parseInt($item.find("stock").text(), 10),
+                        image: $item.find("image").text(),
+                        description: $item.find("description").text()
+                    });
+                });
+
+                filterProducts();
+                renderCart(); // il carrello persistito ora può essere risolto sui prodotti caricati
+                if (callback) callback();
+            })
+            .fail(function () {
+                alert("Errore durante il caricamento del catalogo prodotti (" + xmlUrl + ").");
+            });
+    }
+
     function renderProducts(items) {
         productsContainer.innerHTML = "";
 
@@ -230,12 +277,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function filterProducts() {
+        if (!Array.isArray(productList)) {
+            console.error("productList non è un array!", productList);
+            return;
+        }
+
         const searchTerm = $searchInput.val().trim().toLowerCase();
         const selectedCategory = $categoryFilter.val();
         const onlyFavorites = $favoritesToggle.is(":checked");
         const sortCriteria = $sortFilter.val();
 
-        let result = products.filter(function (product) {
+        let result = productList.filter(function (product) {
             const matchesName = product.name.toLowerCase().indexOf(searchTerm) !== -1;
             const matchesCategory = (selectedCategory === "all") || (product.category.toLowerCase() === selectedCategory.toLowerCase());
             const matchesFav = !onlyFavorites || favorites.includes(product.id);
@@ -278,7 +330,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $products.find(".clickable-detail").on("click", function () {
             const card = $(this).closest(".product-card");
             const productId = parseInt(card.data("id"), 10);
-            const product = products.find(p => p.id === productId);
+            const product = productList.find(function (p) { return p.id === productId; });
             showProductInfo(product);
         });
 
@@ -343,9 +395,16 @@ document.addEventListener("DOMContentLoaded", function () {
         modalCart.close();
     });
 
+    // Azione pulsante "Altro": viene caricato products.data2.xml
+    $btnLoadMore.on("click", function () {
+        loadProductsFromXML("data/products-data2.xml", function () {
+            $btnLoadMore.prop("disabled", true).text("Tutti i prodotti caricati");
+        });
+    });
+
     // ==========================================================================
     // 8. AVVIO APPLICAZIONE
     // ==========================================================================
-    filterProducts(); // usa filterProducts() al posto di renderProducts(products) così applica fin da subito eventuali checkbox o select preimpostate
+    loadProductsFromXML("data/products-data1.xml");
     renderCart();
 });

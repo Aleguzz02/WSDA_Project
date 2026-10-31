@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<products
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="products-data-schema.xsd">
+    <product id="101">
+        <name>Laptop Air 13</name>
+        <category>laptop</category>
+        <price>1099.99</price>
+        <stock>3</stock>
+        <image>https://placehold.co/400x300?text=Laptop+Air+13</image>
+        <description>Ultrabook leggero con scocca in alluminio, SSD da 512 GB e autonomia fino a 12 ore.</description>
+    </product>
+    <product id="102">
+        <name>Tastiera Wireless</name>
+        <category>accessori</category>
+        <price>34.99</price>
+        <stock>10</stock>
+        <image>https://placehold.co/400x300?text=Tastiera+Wireless</image>
+        <description>Tastiera compatta senza fili con layout italiano e connessione Bluetooth multi-dispositivo.</description>
+    </product>
+    <product id="103">
+        <name>Monitor 32 Pollici 4K</name>
+        <category>monitor</category>
+        <price>349.99</price>
+        <stock>2</stock>
+        <image>https://placehold.co/400x300?text=Monitor+32+4K</image>
+        <description>Monitor UHD 4K con pannello VA, HDR10 e ingressi HDMI 2.0 e DisplayPort per uso professionale.</description>
+    </product>
+    <product id="104">
+        <name>Speaker Bluetooth</name>
+        <category>audio</category>
+        <price>79.99</price>
+        <stock>11</stock>
+        <image>https://placehold.co/400x300?text=Speaker+Bluetooth</image>
+        <description>Diffusore portatile resistente ad acqua con suono stereo e 15 ore di riproduzione continua.</description>
+    </product>
+    <product id="105">
+        <name>Smartphone Pro Max</name>
+        <category>smartphone</category>
+        <price>899.99</price>
+        <stock>5</stock>
+        <image>https://placehold.co/400x300?text=Smartphone+Pro+Max</image>
+        <description>Smartphone con display OLED da 6.7 pollici, quadrupla fotocamera e ricarica rapida da 65W.</description>
+    </product>
+    <product id="106">
+        <name>Tablet 12 Pollici Pro</name>
+        <category>tablet</category>
+        <price>449.99</price>
+        <stock>4</stock>
+        <image>https://placehold.co/400x300?text=Tablet+12+Pro</image>
+        <description>Tablet professionale con schermo 2K, supporto allo stilo e connettività Wi-Fi 6.</description>
+    </product>
+    <product id="107">
+        <name>Cuffie Gaming</name>
+        <category>audio</category>
+        <price>89.99</price>
+        <stock>6</stock>
+        <image>https://placehold.co/400x300?text=Cuffie+Gaming</image>
+        <description>Cuffie over-ear con audio surround 7.1, microfono rimovibile e cuscinetti in memory foam.</description>
+    </product>
+    <product id="108">
+        <name>Hub USB-C</name>
+        <category>accessori</category>
+        <price>24.99</price>
+        <stock>20</stock>
+        <image>https://placehold.co/400x300?text=Hub+USB-C</image>
+        <description>Adattatore multiporta con HDMI 4K, USB 3.0, lettore SD e ricarica pass-through da 100W.</description>
+    </product>
+</products>

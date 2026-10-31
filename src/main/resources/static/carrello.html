@@ -33,43 +33,13 @@
 <!-- CORPO PRINCIPALE (LISTA ARTICOLI A SINISTRA + SIDEBAR TOTALE A DESTRA) -->
 <div class="cart-layout">
 
-    <!-- ELENCO PRODOTTI NEL CARRELLO -->
+    <!-- ELENCO PRODOTTI NEL CARRELLO (POPOLATO DINAMICAMENTE) -->
     <main class="cart-items">
         <h2>Il tuo Carrello</h2>
 
-        <!-- Prodotto 1 -->
-        <article class="cart-item" data-price="49.99">
-            <img src="https://placehold.co/120x90?text=Cuffie" alt="Cuffie Bluetooth">
-            <div class="cart-item-details">
-                <h3>Cuffie Bluetooth</h3>
-                <p class="desc">Cuffie wireless con cancellazione attiva del rumore.</p>
-                <p class="unit-price">Prezzo unitario: € <span>49.99</span></p>
-            </div>
-            <div class="cart-item-quantity">
-                <label for="qty-1">Quantità:</label>
-                <input type="number" id="qty-1" class="item-qty" min="1" max="10" value="1">
-            </div>
-            <div class="cart-item-subtotal">
-                <p>Subtotale: <strong>€ <span class="subtotal-val">49.99</span></strong></p>
-            </div>
-        </article>
-
-        <!-- Prodotto 2 -->
-        <article class="cart-item" data-price="19.99">
-            <img src="https://placehold.co/120x90?text=Mouse" alt="Mouse Wireless">
-            <div class="cart-item-details">
-                <h3>Mouse Wireless</h3>
-                <p class="desc">Mouse ergonomico per ufficio e studio.</p>
-                <p class="unit-price">Prezzo unitario: € <span>19.99</span></p>
-            </div>
-            <div class="cart-item-quantity">
-                <label for="qty-2">Quantità:</label>
-                <input type="number" id="qty-2" class="item-qty" min="1" max="10" value="2">
-            </div>
-            <div class="cart-item-subtotal">
-                <p>Subtotale: <strong>€ <span class="subtotal-val">39.98</span></strong></p>
-            </div>
-        </article>
+        <div id="cart-list">
+            <!-- Gli elementi .cart-item verranno inseriti da carrello.js -->
+        </div>
 
         <p><a href="home.html">&larr; Continua gli acquisti</a></p>
     </main>
@@ -79,14 +49,14 @@
         <h3>Riepilogo Ordine</h3>
         <div class="summary-row">
             <span>Articoli totali:</span>
-            <span id="total-items">3</span>
+            <span id="total-items">0</span>
         </div>
         <div class="summary-row total-row">
             <span>Totale provvisorio:</span>
-            <strong>€ <span id="cart-total">89.97</span></strong>
+            <strong>€ <span id="cart-total">0.00</span></strong>
         </div>
         <a href="checkout.html">
-            <button type="button" class="btn-checkout">Procedi al Checkout</button>
+            <button type="button" id="btn-checkout" class="btn-checkout">Procedi al Checkout</button>
         </a>
     </aside>
 

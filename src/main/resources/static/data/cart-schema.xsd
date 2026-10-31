@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <!-- ==================== TIPI SEMPLICI ==================== -->
+    <xs:simpleType name="ProductIdType">
+        <xs:restriction base="xs:positiveInteger"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="PriceType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="QuantityType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="99"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NonEmptyString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ImageUrlType">
+        <xs:restriction base="xs:anyURI"/>
+    </xs:simpleType>
+
+    <!-- ==================== TIPI COMPLESSI ==================== -->
+    <xs:complexType name="CartItemType">
+        <xs:sequence>
+            <xs:element name="name"      type="NonEmptyString"/>
+            <xs:element name="price"     type="PriceType"/>
+            <xs:element name="quantity"  type="QuantityType"/>
+            <xs:element name="image"     type="ImageUrlType"/>
+            <xs:element name="desc"      type="NonEmptyString" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="productId" type="ProductIdType" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CartType">
+        <xs:sequence>
+            <xs:element name="item" type="CartItemType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- ==================== ELEMENTO RADICE ==================== -->
+    <xs:element name="cart" type="CartType">
+        <xs:unique name="uniqueCartItem">
+            <xs:selector xpath="item"/>
+            <xs:field xpath="@productId"/>
+        </xs:unique>
+    </xs:element>
+
+</xs:schema>
